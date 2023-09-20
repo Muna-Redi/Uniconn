@@ -10,4 +10,4 @@ storage = DBStore()
 
 storage.reload()
 
-from uniconn import views
+import views

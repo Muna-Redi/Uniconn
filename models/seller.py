@@ -1,7 +1,7 @@
 #!/user/bin/python3
 """ Seller class """
 
-from uniconn.base_model import Base, BaseModel
+from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String
 
 class Seller(BaseModel, Base):

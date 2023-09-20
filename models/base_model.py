@@ -13,12 +13,12 @@ class BaseModel:
     """ Base Class """
     id = Column(String(60), primary_key=True)
 
-def __init__(self):
-    """ initializer """
+    def __init__(self):
+        """ initializer """
 
-    self.id = uuid.uuid4()
+        self.id = str(uuid.uuid4())
 
-def save(self):
-    """ save object in storage """
-    models.storage.new(self)
-    models.storage.save()
+    def save(self):
+        """ save object in storage """
+        models.storage.new(self)
+        models.storage.save()

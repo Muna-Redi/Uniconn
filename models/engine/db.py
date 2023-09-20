@@ -2,9 +2,12 @@
 """ Database class """
 
 from models.base_model import Base
-import os
+from models.seller import Seller
+from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
+
 
 
 class DBStore:
@@ -15,22 +18,23 @@ class DBStore:
 
     def __init__(self):
         """ instantiates the storage object """
+        DB_USER = getenv('DB_USER')
+        DB_PWD = getenv('DB_PWD')
+        DB_HOST = getenv('DB_HOST')
+        DB_NAME = getenv('DB_NAME')
+        DB_ENV = getenv('DB_ENV')
 
-        DB_USER = os.getenv('DB_USER')
-        DB_PWD = os.getenv('DB_PWD')
-        DB_HOST = os.getenv('DB_HOST')
-        DB_NAME = os.getenv('DB_NAME')
-        DB_ENV = os.getenv('DB_ENV')
-
-        self.__engine = create_engine(f'mysql+mysqldb://{DB_USER}:{DB_PWD}\
-                                       @{DB_HOST}/{DB_NAME}')
-
-#    if DB_ENV == 'test':
-#        Base.metadata.drop_all(self.__engine)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(DB_USER,
+                                             DB_PWD,
+                                             DB_HOST,
+                                             DB_NAME))
+        if DB_ENV == 'test':
+            Base.metadata.drop_all(self.__engine)
 
     def new(self, obj):
         """ Adds a new object to the database """
-        self.session.add(obj)
+        self.__session.add(obj)
 
     def save(self):
         """ saves an object to the database """
